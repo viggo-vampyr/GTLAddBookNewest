@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AddBookTranslator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2844e56a6c1a4728bcfa0ff149be7aa8c53ccd44")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2c1a3f66b236b3e917bb56776d56bdee118eec9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AddBookTranslator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AddBookTranslator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -6,17 +6,17 @@ using System.Text.Json;
 using NJsonSchema;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-var factory = new ConnectionFactory { HostName = "rabbitmq" }; //enten local, rabbitmq eller host.docker.internal efter behov
+var factory = new ConnectionFactory { HostName = "localhost" }; //enten local, rabbitmq eller host.docker.internal efter behov
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 
-await channel.QueueDeclareAsync(queue: "add-book_queue", durable: true, exclusive: false,
+await channel.QueueDeclareAsync(queue: "add-book-queue", durable: true, exclusive: false,
     autoDelete: false, arguments: null);
 
-await channel.QueueDeclareAsync(queue: "translated-book_queue", durable: true, exclusive: false,
+await channel.QueueDeclareAsync(queue: "translated-book-queue", durable: true, exclusive: false,
 autoDelete: false, arguments: null);
 
-await channel.QueueDeclareAsync(queue: "invalid_queue", durable: true, exclusive: false,
+await channel.QueueDeclareAsync(queue: "invalid-queue", durable: true, exclusive: false,
     autoDelete: false, arguments: null);
 
 await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
@@ -50,7 +50,7 @@ consumer.ReceivedAsync += async (model, ea) =>
                 };
 
                 var errorBody = Encoding.UTF8.GetBytes(message + errorReason);
-                await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "invalid_queue", mandatory: true,
+                await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "invalid-queue", mandatory: true,
                 basicProperties: errorproperties, body: errorBody);
 
                 await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
@@ -60,7 +60,7 @@ consumer.ReceivedAsync += async (model, ea) =>
         }
 
         var originalMessage = JsonSerializer.Deserialize<Message>(message);
-        Console.WriteLine($" [x] Received: Title={originalMessage.Title}, Author={originalMessage.Author}, ISBN={originalMessage.ISBN}");
+        Console.WriteLine($" [x] Received: ISBN={originalMessage.ISBN}, Title={originalMessage.Title}, Author={originalMessage.Author}");
 
         var transformedMessage = new TranslatedMessage
         {
@@ -77,7 +77,7 @@ consumer.ReceivedAsync += async (model, ea) =>
         };
         var outputBody = Encoding.UTF8.GetBytes(transformedMessageJson);
 
-       await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "translated-book_queue",
+       await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "translated-book-queue",
             mandatory: true, basicProperties: properties, body: outputBody);
 
         await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
@@ -90,7 +90,7 @@ consumer.ReceivedAsync += async (model, ea) =>
     }
 };
 
-await channel.BasicConsumeAsync("add-book_queue", autoAck: false, consumer: consumer);
+await channel.BasicConsumeAsync("add-book-queue", autoAck: false, consumer: consumer);
 
 string isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER");
 
@@ -107,9 +107,13 @@ else
 
 public class Message
 {
+    public string ISBN { get; set; }
+    //public string ISBN_secondary { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
-    public string ISBN { get; set; }
+    //public string Seller { get; set; }
+    //public uint Price { get; set; }
+
 }
 
 public class TranslatedMessage

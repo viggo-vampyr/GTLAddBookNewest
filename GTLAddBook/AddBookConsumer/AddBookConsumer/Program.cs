@@ -3,14 +3,14 @@ using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
 
-var factory = new ConnectionFactory { HostName = "rabbitmq" };
+var factory = new ConnectionFactory { HostName = "localhost" };
 using var connection = await factory.CreateConnectionAsync();
 using var channel = await connection.CreateChannelAsync();
 
-await channel.QueueDeclareAsync(queue: "translated-book_queue", durable: true, exclusive: false,
+await channel.QueueDeclareAsync(queue: "translated-book-queue", durable: true, exclusive: false,
     autoDelete: false, arguments: null);
 
-await channel.ExchangeDeclareAsync(exchange: "broadcast_database", type: ExchangeType.Fanout);
+await channel.ExchangeDeclareAsync(exchange: "broadcast-database", type: ExchangeType.Fanout);
 
 await channel.BasicQosAsync(prefetchSize: 0, prefetchCount: 1, global: false);
 
@@ -29,7 +29,7 @@ consumer.ReceivedAsync += async (model, ea) =>
 
     var outputBody = Encoding.UTF8.GetBytes(transformedMessageJson);
 
-    await channel.BasicPublishAsync(exchange: "broadcast_database", routingKey: string.Empty,
+    await channel.BasicPublishAsync(exchange: "broadcast-database", routingKey: string.Empty,
          body: outputBody);
 
 
@@ -37,7 +37,7 @@ consumer.ReceivedAsync += async (model, ea) =>
 };
 
 
-await channel.BasicConsumeAsync("translated-book_queue", autoAck: false, consumer: consumer);
+await channel.BasicConsumeAsync("translated-book-queue", autoAck: false, consumer: consumer);
 
 string isDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER");
 
