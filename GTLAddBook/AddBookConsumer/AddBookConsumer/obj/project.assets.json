@@ -136,19 +136,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\prang\\.nuget\\packages\\": {}
+    "C:\\Users\\milan\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\prang\\source\\repos\\Programmering\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\AddBookConsumer.csproj",
+      "projectUniqueName": "C:\\repos\\GTLAddBookNewest\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\AddBookConsumer.csproj",
       "projectName": "AddBookConsumer",
-      "projectPath": "C:\\Users\\prang\\source\\repos\\Programmering\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\AddBookConsumer.csproj",
-      "packagesPath": "C:\\Users\\prang\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\prang\\source\\repos\\Programmering\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\obj\\",
+      "projectPath": "C:\\repos\\GTLAddBookNewest\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\AddBookConsumer.csproj",
+      "packagesPath": "C:\\Users\\milan\\.nuget\\packages\\",
+      "outputPath": "C:\\repos\\GTLAddBookNewest\\GTLAddBook\\AddBookConsumer\\AddBookConsumer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\prang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\milan\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -173,7 +178,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -200,7 +206,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
